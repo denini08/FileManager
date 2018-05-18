@@ -24,12 +24,21 @@ public class Main {
 			escolha = s.nextInt();
 			switch(escolha) {
 				case 1:	
+				try {
 					fm.listarRoots();
+				} catch (Exception e3) {
+					System.out.println("Erro: " + e3.getMessage());
+				}
 					break;
 					
 					
 				case 2:
+				try {
 					fm.listarTodosArquivos();
+				} catch (Exception e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+				}
 					break;
 					
 					
