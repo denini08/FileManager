@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,7 +11,8 @@ public class Main {
 
 		FileManager fm = new FileManager();
 		
-		fm.buscar("nenhum.txt");
+		fm.buscaArquivoCopia("nova pasta");
+		
 		
 	}
 	

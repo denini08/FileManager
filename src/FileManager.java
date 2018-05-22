@@ -1,5 +1,9 @@
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,6 +11,7 @@ public class FileManager {
 	
 	private static final Exception Exception = null;
 	private int contador_arquivos = 0, contador_pastas = 0;
+	private String diretorioAtual = "C://Users//Brenno//Desktop";
 	
 	private void setContador_arquivos(int i) {
 		this.contador_arquivos = i;
@@ -22,6 +27,75 @@ public class FileManager {
 	
 	private int getContador_pastas() {
 		return this.contador_pastas;
+	}
+	
+	public void buscaArquivoCopia(String arquivo)throws Exception {
+		ArrayList<File> arq;
+		Scanner s = new Scanner(System.in);
+		int arquivoEscolhido;
+		String caminhoNovoArquivo;
+		
+		arq = buscar(arquivo);
+		
+		if(arq.isEmpty()) {
+			System.out.println("Nenhum arquivo encontrado");
+			return;
+		}
+		
+		if(arq.size() > 1) {
+			System.out.println("Mais de um arquivo foi encontrado");
+			System.out.println("Especifique qual você deseja copiar");
+			
+			for(int i = 0; i < arq.size(); i++) {
+				System.out.println(i + " - "+ arq.get(i).getName() + " caminho: " + arq.get(i).getAbsolutePath());
+			}
+			
+			System.out.println("digite o numero correspondente ao arquivo que você deseja copiar");
+			
+			arquivoEscolhido = s.nextInt();
+
+			System.out.println("Nome: " + arq.get(arquivoEscolhido).getName());
+			System.out.println("Caminho: " + arq.get(arquivoEscolhido).getAbsolutePath());
+			System.out.println("Digite o diretorio para onde o novo arquivo vai ser copiado:");
+			
+			caminhoNovoArquivo = s.nextLine();
+			
+			copiaArquivo(arq.get(arquivoEscolhido),caminhoNovoArquivo);
+		}
+		else {
+			System.out.println("Nome: " + arq.get(0).getName());
+			System.out.println("Caminho: " + arq.get(0).getAbsolutePath());
+			System.out.println("Digite o diretorio para onde o novo arquivo vai ser copiado:");
+			
+			caminhoNovoArquivo = s.nextLine();
+			
+			copiaArquivo(arq.get(0),caminhoNovoArquivo);
+		}
+		System.out.println("Arquivo copiado com sucesso");
+	}
+	
+	public void copiaArquivo(File arquivo,String caminhoNovoArquivo) throws IOException {
+		
+		FileInputStream in = new FileInputStream(arquivo.getAbsolutePath());
+		FileOutputStream out = new FileOutputStream(caminhoNovoArquivo+"Copia"+arquivo.getName());
+		File arquivoLeitura = new File(arquivo.getAbsolutePath());
+		
+		int tamanhoArquivo = (int) arquivoLeitura.length();
+		
+		byte[] b = new byte [tamanhoArquivo];
+		
+		try {
+			in.read(b);
+			out.write(b);
+		}
+		catch(Exception e) {
+			System.out.println("Erro ao copiar arquivos");
+		}
+		finally {
+			in.close();
+			out.close();
+		}
+		
 	}
 	
 	public void listarRoots() throws Exception { // exibe todos os roots
@@ -59,13 +133,12 @@ public class FileManager {
 	}
 	
 	public ArrayList<File> buscar(String arquivo) throws java.lang.Exception{
-		String root = "C://Users//Brenno//Desktop"; // caminho do root
 		ArrayList<File>diretorios = new ArrayList<File>(); // arrayList q vai ser preenchido e percorrido p buscar o arquivo especificado
 		ArrayList<File>arquivosEncontrados = new ArrayList<File>(); // arrayList q vai guardar os arquivos q forem sendo achados
 		
-		diretorios = getArquivos(root); // preenche o arrayList diretorios c todos os diretorios do root
+		diretorios = getArquivos(this.diretorioAtual); // preenche o arrayList diretorios c todos os diretorios do root
 		
-		if(diretorios.isEmpty()) System.out.println(root + "especificado está vazio");
+		if(diretorios.isEmpty()) System.out.println(this.diretorioAtual + "especificado está vazio");
 		
 		for(int i = 0; i < diretorios.size(); i++) { // percorre o array diretorios
 			if(diretorios.get(i).getName().equals(arquivo)) { // se for igual ao nome passado cmo parametro
