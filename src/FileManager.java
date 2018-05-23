@@ -5,13 +5,28 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
+
+import javax.xml.crypto.Data;
 
 public class FileManager {
 	
 	private static final Exception Exception = null;
 	private int contador_arquivos = 0, contador_pastas = 0;
-	private String diretorioAtual = "C://Users//Brenno//Desktop";
+	private String diretorioAtual;
+	
+	public FileManager(String inicio) {
+		setDiretorioAtual(inicio);
+	}
+	
+	public String getDiretorioAtual(){
+		return this.diretorioAtual;
+	}
+	
+	public void setDiretorioAtual(String s) {
+		this.diretorioAtual = s;
+	}
 	
 	private void setContador_arquivos(int i) {
 		this.contador_arquivos = i;
@@ -113,23 +128,25 @@ public class FileManager {
 		return File.listRoots();
 	}	
 	
-	public void listarTodosArquivos() throws Exception {
+	public void listarTodosArquivos(){
 		File [] rot = File.listRoots();
 		
-		if(rot == null) {
-			throw new Exception("Erro inesperado");
-		}
 		
-		for(int i = 0; i < rot.length ; i++) {
-			System.out.println(rot[i].toString());
-			System.out.println(" Mostrando tudo de " + rot[i].toString());
-			mostrartudo(rot[i].toString());
+		try {
+			for(int i = 0; i < rot.length ; i++) {
+				System.out.println(rot[i].toString());
+				System.out.println(" Mostrando tudo de " + rot[i].toString());
+				mostrartudo(rot[i].toString());
+			}
+			
+			System.out.println("Quantidade de pastas:" + getContador_pastas() 	
+							 + "\nQuantidade de arquivos" + getContador_arquivos());
+			setContador_arquivos(0);   //contador = 0
+			setContador_pastas(0); 		//contador = 0
 		}
-		
-		System.out.println("Quantidade de pastas:" + getContador_pastas() 	
-						 + "\nQuantidade de arquivos" + getContador_arquivos());
-		setContador_arquivos(0);   //contador = 0
-		setContador_pastas(0); 		//contador = 0
+		catch(Exception e) {
+			
+		}	
 	}
 	
 	public ArrayList<File> buscar(String arquivo) throws java.lang.Exception{
@@ -141,7 +158,7 @@ public class FileManager {
 		if(diretorios.isEmpty()) System.out.println(this.diretorioAtual + "especificado está vazio");
 		
 		for(int i = 0; i < diretorios.size(); i++) { // percorre o array diretorios
-			if(diretorios.get(i).getName().equals(arquivo)) { // se for igual ao nome passado cmo parametro
+			if(diretorios.get(i).getName().contains(arquivo)) { // se for igual ao nome passado cmo parametro
 				arquivosEncontrados.add(diretorios.get(i)); // add em arquivos encontrados
 			}
 		}
@@ -197,8 +214,8 @@ public class FileManager {
 		}
 	}
 	
-	public void listarDiretorio(String caminho) throws Exception {
-		File[] arquivos1 = new File(caminho).listFiles();
+	public void listarDiretorio() throws Exception {
+		File[] arquivos1 = new File(this.diretorioAtual).listFiles();
 		if(arquivos1 == null) {
 			throw new Exception("Não foi possivel abrir o diretorio");
 		}
@@ -276,7 +293,56 @@ public class FileManager {
 		}
 	}
 	
-	public void informacoes(String caminho) {
+	public void informacoes(String arquivo) throws java.lang.Exception {
+		ArrayList<File>arquivosEncontrados = buscar(arquivo);
+		Scanner s = new Scanner(System.in);
+		int arquivoEscolhido;
+		
+		if(arquivosEncontrados.size() > 1) {
+			System.out.println("Mais de um arquivo foi encontrado");
+			System.out.println("Especifique qual você deseja ver os detalhes");
+			
+			for(int i = 0; i < arquivosEncontrados.size(); i++) {
+				System.out.println(i + " - "+ arquivosEncontrados.get(i).getName() + " caminho: " + arquivosEncontrados.get(i).getAbsolutePath());
+			}
+			
+			System.out.println("digite o numero correspondente ao arquivo que você deseja ver detalhes");
+			
+			arquivoEscolhido = s.nextInt();
+			
+			File arq = arquivosEncontrados.get(arquivoEscolhido);
+			
+			System.out.println("Nome: " + arq.getName());
+			System.out.println("Caminho: " + arq.getAbsolutePath());
+			System.out.println("Tamanho: "+ arq.length()+" bytes");
+			
+			if(arq.canRead()) {
+				System.out.println("Pode ser lido");
+			}
+			else {
+				System.out.println("Não pode ser lido");
+			}
+			
+			if(arq.canWrite()) {
+				System.out.println("Pode ser escrito");
+			}
+			else {
+				System.out.println("Não pode ser escrito");
+			}
+			
+			if(arq.isHidden()) {
+				System.out.println("Arquivo oculto");
+			}
+			else {
+				System.out.println("Arquivo visível");
+			}
+			
+			
+			Date d = new Date(arq.lastModified());
+			
+			System.out.println(d);
+		} 
+		
 		
 	}
 	
