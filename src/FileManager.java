@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -59,13 +61,13 @@ public class FileManager {
 		
 		if(arq.size() > 1) {
 			System.out.println("Mais de um arquivo foi encontrado");
-			System.out.println("Especifique qual você deseja copiar");
+			System.out.println("Especifique qual vocï¿½ deseja copiar");
 			
 			for(int i = 0; i < arq.size(); i++) {
 				System.out.println(i + " - "+ arq.get(i).getName() + " caminho: " + arq.get(i).getAbsolutePath());
 			}
 			
-			System.out.println("digite o numero correspondente ao arquivo que você deseja copiar");
+			System.out.println("digite o numero correspondente ao arquivo que vocï¿½ deseja copiar");
 			
 			arquivoEscolhido = s.nextInt();
 
@@ -73,7 +75,7 @@ public class FileManager {
 			System.out.println("Caminho: " + arq.get(arquivoEscolhido).getAbsolutePath());
 			System.out.println("Digite o diretorio para onde o novo arquivo vai ser copiado:");
 			
-			caminhoNovoArquivo = s.nextLine();
+			caminhoNovoArquivo = s.next();
 			
 			copiaArquivo(arq.get(arquivoEscolhido),caminhoNovoArquivo);
 		}
@@ -82,7 +84,7 @@ public class FileManager {
 			System.out.println("Caminho: " + arq.get(0).getAbsolutePath());
 			System.out.println("Digite o diretorio para onde o novo arquivo vai ser copiado:");
 			
-			caminhoNovoArquivo = s.nextLine();
+			caminhoNovoArquivo = s.next();
 			
 			copiaArquivo(arq.get(0),caminhoNovoArquivo);
 		}
@@ -91,8 +93,8 @@ public class FileManager {
 	
 	public void copiaArquivo(File arquivo,String caminhoNovoArquivo) throws IOException {
 		
-		FileInputStream in = new FileInputStream(arquivo.getAbsolutePath());
-		FileOutputStream out = new FileOutputStream(caminhoNovoArquivo+"Copia"+arquivo.getName());
+		InputStream in = new FileInputStream(arquivo.getAbsolutePath());
+		OutputStream out = new FileOutputStream(caminhoNovoArquivo+"Copia"+arquivo.getName());
 		File arquivoLeitura = new File(arquivo.getAbsolutePath());
 		
 		int tamanhoArquivo = (int) arquivoLeitura.length();
@@ -118,7 +120,7 @@ public class FileManager {
 		if(rot == null) {
 			throw new Exception("Erro inesperado");
 		}
-		System.out.println("Esses são todos os Root's:");
+		System.out.println("Esses sï¿½o todos os Root's:");
 		for(int i = 0; i < rot.length ; i++) {
 			System.out.println(rot[i]);
 		}
@@ -133,11 +135,11 @@ public class FileManager {
 		
 		
 		try {
-			for(int i = 0; i < rot.length ; i++) {
-				System.out.println(rot[i].toString());
-				System.out.println(" Mostrando tudo de " + rot[i].toString());
-				mostrartudo(rot[i].toString());
-			}
+			//for(int i = 0; i < rot.length ; i++) {
+				System.out.println(rot[2].toString());
+				System.out.println(" Mostrando tudo de " + rot[2].toString());
+				mostrartudo(rot[2].toString());
+			//}
 			
 			System.out.println("Quantidade de pastas:" + getContador_pastas() 	
 							 + "\nQuantidade de arquivos" + getContador_arquivos());
@@ -155,7 +157,7 @@ public class FileManager {
 		
 		diretorios = getArquivos(this.diretorioAtual); // preenche o arrayList diretorios c todos os diretorios do root
 		
-		if(diretorios.isEmpty()) System.out.println(this.diretorioAtual + "especificado está vazio");
+		if(diretorios.isEmpty()) System.out.println(this.diretorioAtual + "especificado estï¿½ vazio");
 		
 		for(int i = 0; i < diretorios.size(); i++) { // percorre o array diretorios
 			if(diretorios.get(i).getName().contains(arquivo)) { // se for igual ao nome passado cmo parametro
@@ -201,7 +203,7 @@ public class FileManager {
 		File[] arquivos1 = new File(caminho).listFiles();
 		
 		if(arquivos1 == null) {
-			throw new Exception("diretorio nao existe");
+			return;
 		}
 		for(int i = 0; i < arquivos1.length ; i++) {
 			System.out.println("Nome: " + arquivos1[i].getName() + " caminho: " + arquivos1[i].getAbsolutePath());
@@ -217,15 +219,15 @@ public class FileManager {
 	public void listarDiretorio() throws Exception {
 		File[] arquivos1 = new File(this.diretorioAtual).listFiles();
 		if(arquivos1 == null) {
-			throw new Exception("Não foi possivel abrir o diretorio");
+			throw new Exception("Nï¿½o foi possivel abrir o diretorio");
 		}
 		for(int i = 0; i < arquivos1.length ; i++) {
 			System.out.print("Nome: " + arquivos1[i].getName());
 			if(arquivos1[i].isDirectory()) {
-				System.out.println(" É pasta");
+				System.out.println(" ï¿½ pasta");
 				setContador_pastas(getContador_pastas() + 1);
 			}else {
-				System.out.println(" É arquivo");
+				System.out.println(" ï¿½ arquivo");
 				setContador_arquivos(getContador_arquivos() + 1);;
 			}
 			
@@ -249,13 +251,13 @@ public class FileManager {
 		
 		if(arquivosEncontrados.size() > 1) {
 			System.out.println("Mais de um arquivo foi encontrado");
-			System.out.println("Especifique qual você deseja excluir");
+			System.out.println("Especifique qual vocï¿½ deseja excluir");
 			
 			for(int i = 0; i < arquivosEncontrados.size(); i++) {
 				System.out.println(i + " - "+ arquivosEncontrados.get(i).getName() + " caminho: " + arquivosEncontrados.get(i).getAbsolutePath());
 			}
 			
-			System.out.println("digite o numero correspondente ao arquivo que você deseja excluir");
+			System.out.println("digite o numero correspondente ao arquivo que vocï¿½ deseja excluir");
 			
 			arquivoEscolhido = s.nextInt();
 			
@@ -300,13 +302,13 @@ public class FileManager {
 		
 		if(arquivosEncontrados.size() > 1) {
 			System.out.println("Mais de um arquivo foi encontrado");
-			System.out.println("Especifique qual você deseja ver os detalhes");
+			System.out.println("Especifique qual vocï¿½ deseja ver os detalhes");
 			
 			for(int i = 0; i < arquivosEncontrados.size(); i++) {
 				System.out.println(i + " - "+ arquivosEncontrados.get(i).getName() + " caminho: " + arquivosEncontrados.get(i).getAbsolutePath());
 			}
 			
-			System.out.println("digite o numero correspondente ao arquivo que você deseja ver detalhes");
+			System.out.println("digite o numero correspondente ao arquivo que vocï¿½ deseja ver detalhes");
 			
 			arquivoEscolhido = s.nextInt();
 			
@@ -320,21 +322,21 @@ public class FileManager {
 				System.out.println("Pode ser lido");
 			}
 			else {
-				System.out.println("Não pode ser lido");
+				System.out.println("Nï¿½o pode ser lido");
 			}
 			
 			if(arq.canWrite()) {
 				System.out.println("Pode ser escrito");
 			}
 			else {
-				System.out.println("Não pode ser escrito");
+				System.out.println("Nï¿½o pode ser escrito");
 			}
 			
 			if(arq.isHidden()) {
 				System.out.println("Arquivo oculto");
 			}
 			else {
-				System.out.println("Arquivo visível");
+				System.out.println("Arquivo visï¿½vel");
 			}
 			
 			

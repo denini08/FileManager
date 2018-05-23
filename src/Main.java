@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,13 +21,13 @@ public class Main {
 		Scanner s =new Scanner(System.in);
 		while(escolha != 8) {
 			System.out.println("\n\n++++------------------+++++");
-			System.out.println("Você está em: "+ fm.getDiretorioAtual());
-			System.out.println("Escolha sua opção:\n"
+			System.out.println("Vocï¿½ estï¿½ em: "+ fm.getDiretorioAtual());
+			System.out.println("Escolha sua opï¿½ï¿½o:\n"
 					+ "0 - Mudar de diretorio\n"
 					+ "1 - Listar todos os roots\n"
 					+ "2 - Listar todos as arquivos de todos os Rots \n"
 					+ "3 - Listar/Filtrar todos s arquivos a partir de um texto (Search)\n"
-					+ "4 - Exibir todos os arquivos do diretório atual\n"
+					+ "4 - Exibir todos os arquivos do diretï¿½rio atual\n"
 					+ "5 - Deletar arquivo\n"
 					+ "6 - Listar atributos de um arquivo\n"
 					+ "7 - Copiar um arquivo\n"
@@ -39,7 +37,7 @@ public class Main {
 				
 				case 0:	
 				try {
-					System.out.println("Para qual diretório você deseja ir?");
+					System.out.println("Para qual diretï¿½rio vocï¿½ deseja ir?");
 					String diretorio = s.next();
 					fm.setDiretorioAtual(diretorio);
 				} catch (Exception e3) {
@@ -86,14 +84,14 @@ public class Main {
 					
 					
 				case 5:
-					System.out.println("Digite o nome do arquivo qual você deseja apagar:");
+					System.out.println("Digite o nome do arquivo qual vocï¿½ deseja apagar:");
 					caminho = s.next();
 					try {
 						if(fm.apagar(caminho)) {
 							System.out.println("Arquivo deletado com sucesso");
 						}
 						else {
-							System.out.println("Operação de exclusão cancelada");
+							System.out.println("Operaï¿½ï¿½o de exclusï¿½o cancelada");
 						}
 					} catch (Exception e1) {
 						
@@ -103,7 +101,7 @@ public class Main {
 					
 					
 				case 6:
-					System.out.println("Digite o endereço do arquivo qual você deseja ver informações:");
+					System.out.println("Digite o nome do arquivo qual vocï¿½ deseja ver informaï¿½ï¿½es:");
 					caminho = s.next();
 					fm.informacoes(caminho);
 					
@@ -111,7 +109,7 @@ public class Main {
 					
 					
 				case 7:
-					System.out.println("Digite o nome do arquivo qual você deseja COPIAR:");
+					System.out.println("Digite o nome do arquivo qual vocï¿½ deseja COPIAR:");
 					caminho = s.next();
 					
 					try {
@@ -125,10 +123,10 @@ public class Main {
 					
 					
 				case 8:
-						System.out.println("Até mais!");
+						System.out.println("Atï¿½ mais!");
 						break;
 				default: 
-					System.out.println("Voce digitou a opção errada");
+					System.out.println("Voce digitou a opï¿½ï¿½o errada");
 					break;
 			}
 			
