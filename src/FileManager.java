@@ -1,4 +1,4 @@
-
+﻿
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -135,11 +135,11 @@ public class FileManager {
 		
 		
 		try {
-			//for(int i = 0; i < rot.length ; i++) {
-				System.out.println(rot[2].toString());
-				System.out.println(" Mostrando tudo de " + rot[2].toString());
-				mostrartudo(rot[2].toString());
-			//}
+			for(int i = 0; i < rot.length ; i++) {
+				System.out.println(rot[i].toString());
+				System.out.println(" Mostrando tudo de " + rot[i].toString());
+				mostrartudo(rot[i].toString());
+			}
 			
 			System.out.println("Quantidade de pastas:" + getContador_pastas() 	
 							 + "\nQuantidade de arquivos" + getContador_arquivos());
